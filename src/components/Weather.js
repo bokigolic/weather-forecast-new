@@ -13,15 +13,16 @@ function Weather() {
           params: {
             latitude: city.latitude,
             longitude: city.longitude,
-            daily: 'temperature_2m_max,temperature_2m_min,precipitation_sum',
-            timezone: 'auto', // Automatski određuje vremensku zonu
-            start: new Date().toISOString().split('T')[0], // Početak od danas
-            end: new Date(new Date().setDate(new Date().getDate() + 7)).toISOString().split('T')[0] // Kraj za 7 dana
+            daily: 'weathercode,temperature_2m_max,temperature_2m_min,precipitation_sum',
+            timezone: 'auto',
+            start: new Date().toISOString().split('T')[0],
+            end: new Date(new Date().setDate(new Date().getDate() + 7)).toISOString().split('T')[0]
           }
         });
         setWeatherData(result.data);
       } catch (error) {
         console.error('Error fetching weather data:', error);
+        setWeatherData(null); // Ensure weatherData is null if error occurs
       }
     };
 
@@ -34,24 +35,38 @@ function Weather() {
     <div className="container mt-3">
       <h1 className="text-center mb-4">Weather Forecast</h1>
       <CitySelector setCity={setCity} />
-      {weatherData && weatherData.daily ? (
+      {weatherData && weatherData.daily && weatherData.daily.time.length > 0 ? (
         <div>
           {weatherData.daily.time.map((date, index) => (
             <div key={index} className="card mt-3">
               <div className="card-body">
                 <h5 className="card-title">{new Date(date).toLocaleDateString()}</h5>
-                <p className="card-text">Max Temperature: {weatherData.daily.temperature_2m_max[index]} °C</p>
-                <p className="card-text">Min Temperature: {weatherData.daily.temperature_2m_min[index]} °C</p>
-                <p className="card-text">Precipitation: {weatherData.daily.precipitation_sum[index]} mm</p>
+                <img src={getWeatherIcon(weatherData.daily.weathercode[index])} alt="Weather Icon" className="weather-icon" />
+                <div className="weather-details">
+                  <p>Max Temp: {weatherData.daily.temperature_2m_max[index]} °C</p>
+                  <p>Min Temp: {weatherData.daily.temperature_2m_min[index]} °C</p>
+                  <p>Precipitation: {weatherData.daily.precipitation_sum[index]} mm</p>
+                </div>
               </div>
             </div>
           ))}
         </div>
       ) : (
-        <p>Loading data...</p>
+        <p>Loading data or no data available</p>
       )}
     </div>
   );
 }
 
 export default Weather;
+
+function getWeatherIcon(code) {
+  const iconMap = {
+    'clear': '/path/to/sun-icon.png',
+    'rainy': '/path/to/rain-icon.png',
+    'cloudy': '/path/to/cloud-icon.png',
+    'snow': '/path/to/snow-icon.png',
+    'default': '/path/to/default-icon.png'
+  };
+  return iconMap[code] || iconMap['default'];
+}

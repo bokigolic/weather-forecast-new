@@ -1,0 +1,48 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap");
+
+.weather-container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+  font-family: "Roboto", sans-serif;
+}
+
+.weather-title {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.weather-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.weather-card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.3s ease-in-out;
+}
+
+.weather-card:hover {
+  transform: translateY(-5px);
+}
+
+.weather-date {
+  font-weight: 500;
+  color: #2a5885;
+}
+
+.weather-icon {
+  width: 50px;
+  margin: 10px auto;
+}
+
+.weather-details p {
+  margin: 5px 0;
+  color: #666;
+}
