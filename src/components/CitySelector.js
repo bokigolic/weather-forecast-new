@@ -2,8 +2,6 @@ function CitySelector({ setCity }) {
   const handleCityChange = (e) => {
     const city = e.target.value;
     const cities = {
-      Berlin: { latitude: '52.52', longitude: '13.41' },
-      London: { latitude: '51.5074', longitude: '-0.1278' },
       'New York': { latitude: '40.7128', longitude: '-74.0060' },
       'Banja Luka': { latitude: '44.7667', longitude: '17.1856' },
       'Lakewood Ranch': { latitude: '27.4117', longitude: '-82.4285' }, // Koordinate za Lakewood Ranch, Florida
@@ -16,8 +14,6 @@ function CitySelector({ setCity }) {
 
   return (
     <select onChange={handleCityChange}>
-      <option value="Berlin">Berlin</option>
-      <option value="London">London</option>
       <option value="New York">New York</option>
       <option value="Banja Luka">Banja Luka</option>
       <option value="Lakewood Ranch">Lakewood Ranch</option>
