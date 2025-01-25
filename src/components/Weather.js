@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import CitySelector from './CitySelector';
-import '../Weather.css'; // Uvoz Weather.css
+import '../Weather.css'; // Import Weather.css
 
 function Weather() {
   const [weatherData, setWeatherData] = useState(null);
@@ -11,8 +11,8 @@ function Weather() {
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
       try {
+        setLoading(true);
         const result = await axios.get('https://api.open-meteo.com/v1/forecast', {
           params: {
             latitude: city.latitude,
@@ -24,18 +24,19 @@ function Weather() {
           }
         });
         setWeatherData(result.data);
+        setError('');
       } catch (error) {
         console.error('Error fetching weather data:', error);
-        setError('Failed to fetch data. Check your internet connection and try again.');
+        setError('Network error. Please check your connection and try again.');
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     };
 
     if (city.latitude && city.longitude) {
       fetchData();
     }
   }, [city]);
-
 
   return (
     <div className="container mt-5">
@@ -70,8 +71,6 @@ function Weather() {
   );
 }
 
-export default Weather;
-
 function getWeatherIcon(code) {
   const iconMap = {
     'clear': '/path/to/sun-icon.png',
@@ -82,3 +81,5 @@ function getWeatherIcon(code) {
   };
   return iconMap[code] || iconMap['default'];
 }
+
+export default Weather;
