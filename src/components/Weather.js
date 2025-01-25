@@ -3,6 +3,9 @@ import axios from 'axios';
 import CitySelector from './CitySelector';
 import '../Weather.css'; // Import Weather.css
 
+
+
+
 function Weather() {
   const [weatherData, setWeatherData] = useState(null);
   const [city, setCity] = useState({ latitude: '52.52', longitude: '13.41' });
